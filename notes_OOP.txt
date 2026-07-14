@@ -1,0 +1,11 @@
+class etudiant:
+    def __init__(self, nom_etudiant: str, code_etudiant: str):
+        self.nom = nom_etudiant
+        self.code = code_etudiant
+
+
+etudiant1 = etudiant(nom_etudiant="bashar1",code_etudiant="eb08_1")
+etudiant2 = etudiant(nom_etudiant="bashar1",code_etudiant="eb08_1")
+etudiant3 = etudiant(nom_etudiant="bashar1",code_etudiant="eb08_1")
+
+etudiant1.nom = "john"

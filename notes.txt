@@ -1,0 +1,74 @@
+#1-
+#je veux un porgramme qui m'aide à maintenir une listes d'usgaers pour mon système
+#et qui roule en continue./
+#chaque usager est représenté seulement par son nom.
+#le programme a 3 fonctionnalités:
+#1) afficher le nom des usagers qui sont dans le système
+#2) afficher le nombre d'usagers qui se trouvent dans le système
+#3) ajouter un usager au système SI CET USAGER NE SE TROUVE PAS DÉJÀ DEDANS.
+# si un choix non-valide est entré, un messsage d'erreur doit apparaitre.
+# Le programme doit arrêter si j'entre une ligne vide.
+# il faut utiliser les fonctions autant que possible pour alléger le code qui
+# se trouve directment dans la boucle 'while'.
+
+def afficher_options():
+    """
+    fonction qui affiche les options a l'usager
+    """
+    print("voici les options:")
+    print("1 afficher le nom des usagers qui sont dans le système")
+    print("2 afficher le nombre d'usagers qui se trouvent dans le système")
+    print("3 ajouter un usager au système SI CET USAGER NE SE TROUVE PAS DÉJÀ DEDANS")
+    print("entrez du texte vide pour arreter le programme.")
+
+
+def affiche_usagers_liste(liste):
+    """
+    fonction qui prend une liste, et qui affiche tous les elements contenus dans cette liste.
+    """
+    if(len(liste) == 0):
+        print("aucun usager dans la liste!")
+        return
+    
+    for x in liste:
+        print(x)
+
+def affiche_nombre_usagers(liste):
+    "fonction qui prend une liste, et affiche le nombre d'usagers qui sont dans la liste."
+    compte = len(liste)
+    print(f"il y a {compte} usagers dans la liste")
+
+def ajouter_usager_dans_liste(liste_usagers:list[str],usager_a_ajouter:str):
+    """
+    fonction qui prend un usager, verifie que l'usager n'est pas deja dans la liste, 
+    et ajoute cet usager a la liste seulement si cet usager n'etait pas deja dans la liste.
+    """
+    for usager_existant in liste_usagers:
+        if usager_existant == usager_a_ajouter:
+            print("l'usager existe deja dans la liste, impossible de le rajouter.")
+            return
+        
+    liste_usagers.append(usager_a_ajouter)
+
+uagers = []
+
+while True:
+
+    afficher_options()
+
+    choix = input("entrez votre choix: ")
+    if choix == "":
+        break
+
+    if choix == "1":  #afficher les usagers
+        affiche_usagers_liste(uagers)
+
+    elif choix == "2": #afficher le nombre d'usagers
+        affiche_nombre_usagers(uagers)
+        
+    elif choix == "3": #ajouter un usager
+        nouvel_usager = input("entre un nouveau nom d'usager a ajouter a la liste: ")
+        ajouter_usager_dans_liste(uagers,nouvel_usager)
+
+    else:
+        print("choix non-valide")

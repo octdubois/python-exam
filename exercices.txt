@@ -1,0 +1,41 @@
+# ex5:
+
+# Ecrire un programme qui compte combien de fois chaque mot apparait dans une phrase.
+# Le programme doit:
+# 1- demander une phrase a l'usager.
+# 2- séparer la phrase en mots avec la fonction .split().
+# 3- utiliser un dictionnaire où la clé est le mot et la valeur est le nombre de fois que le mot apparait.
+# 4- afficher chaque mot avec son compte.
+#
+# Exemple:
+# si la phrase est: "chat chien chat poisson chien chat"
+# le dictionnaire final devrait contenir:
+# "chat": 3
+# "chien": 2
+# "poisson": 1
+
+#et le programme devrait afficher: 
+#chat --- 3
+#chien --- 2
+#poisson --- 1
+phrase = input("entrez une phrase pour voir un compte de chaque mot de la phrase: ")
+# séparer la phrase en mots avec la fonction .split().
+
+liste_mots = phrase.split()
+#Construire un dictionnaire où pour chaque paire cle-valeur: la clé est le mot et la valeur est le
+#nombre de fois que le mot apparait dans la phrase.
+dict_compte_mots = {}
+
+for mot in liste_mots:
+    if mot in dict_compte_mots:
+        # si cette condition est vraie le mot est deja une cle
+        # dans le dictionnaire
+        nouveau_compte = dict_compte_mots[mot] + 1
+        dict_compte_mots[mot] = nouveau_compte
+    else:
+        dict_compte_mots[mot] = 1
+
+print("\n\nvoici le compte des mots de la phrase entree: ")
+for cle,valeur in dict_compte_mots.items():
+    print(f"le mot {cle} est present {valeur} fois dans la phrase.")
+    

@@ -1,0 +1,37 @@
+# 5c - chaque adddresse IP composée avec succès doit
+# être ajoutée à une liste (qui commence vide) par le programme.
+# Il faut ajouter une option qui permet à l'usager de voir
+# toutes les addresses composées avec succès
+# depuis le début du programme.
+
+address_creees :list[str] = [] # les addresses sont des strings comme "192.0.0.1"
+
+while True:
+    print("entrez 'a' si vous voulez composer une addresse ip")
+    print("entrez 'q' pour quitter")
+    print("entrez 'v' pour voir les addresses existantes")
+    choix_usager = input("entrez votre choix:")
+    if choix_usager == "a":
+        nbr1 : int = int(input("entrez le 1er nombre: "))
+        nbr2 : int = int(input("entrez le 2e nombre: "))
+        nbr3 : int = int(input("entrez le 3e nombre: "))
+        nbr4 : int = int(input("entrez le 4e nombre: "))    
+
+        if nbr1 >= 0 and nbr1 <= 255 and nbr2 >= 0 and nbr2 <= 255 and nbr3 >= 0 and nbr3 <= 255 and nbr4 >= 0 and nbr4 <= 255:
+            addresse_complete = f"{nbr1}.{nbr2}.{nbr3}.{nbr4}"
+            #on pourrait aussi faire:    addresse_complete = str(nbr1) + "." + str(nbr2) + "." + str(nbr3) + "." + str(nbr4)
+            print(f"\n address valide: {addresse_complete} \n")
+            # les \n dans les string sont des caracteres speciaux pour ajouter des lignes vides
+            # avant et/ou apres les messsages affiches, ca rend la lecture
+            # des messsages affiches plus claire (C'EST OPTIONNEL)
+            address_creees.append(addresse_complete)
+        else:
+            print("addresse non-valide!")
+    elif choix_usager == 'v':
+        for addresse in address_creees:
+            print(addresse)
+    elif choix_usager == 'q':
+        print("le programme termine ...")
+        break
+    else:
+        print("choix non-valide!")

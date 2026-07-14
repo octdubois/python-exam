@@ -1,0 +1,58 @@
+# ex3:
+
+# Écrire un programme qui utilise un dictionnaire pour associer des fruits à leur prix.
+#
+# Le dictionnaire doit contenir:
+# - "pomme" avec le prix 1.50
+# - "banane" avec le prix 0.75
+# - "orange" avec le prix 1.25
+# - "mangue" avec le prix 2.00
+#
+# Le programme doit:
+# - demander à l'usager le nom d'un fruit.
+# - si le fruit existe dans le dictionnaire, afficher son prix, sinon afficher que ce fruit n'est pas disponible.
+# - demander à l'usager le nom d'un nouveau fruit.
+# - demander à l'usager le prix de ce nouveau fruit.
+# - ajouter ce nouveau fruit dans le dictionnaire.
+# - afficher le dictionnaire complet.
+# (pas besoin de boucle ici, le programme accomplit ces tâches dans l'ordre demandée puis se termine )
+
+dict_prix = {
+    "pomme": 1.50,
+    "banane": 0.75,
+    "orange": 1.25,
+    "mangue": 2.00,
+}
+
+nom_fruit_recherche = input("entrez un nom de fruit pour avoir son prix: ")
+
+if nom_fruit_recherche in dict_prix:
+    prix_fruit_choisi = dict_prix[nom_fruit_recherche]
+    print(f"{nom_fruit_recherche} a un prix : {prix_fruit_choisi} $")
+else:
+    print("le fruit n'est pas dispo")
+
+nouveau_fruit :str = input("entrez un nom de fruit a ajouter dans le dictionnaire des prix: ")
+prix_nouveau_fruit: float = float(input("entrez le prix que vous voulez donner a ce fruit: "))
+
+#validations possibles:
+# 1-verifier si le fruit existe deja dans le dictionnaire
+# 2- verfifier si le nom de fruit entre est vide
+# 3- verifier si le prix entre est negatif
+# 4- avoir une liste de noms de fruits pre-approuve, et l'usager doit uniquement 
+# entrer le nom d'un de ces fruits-la
+
+dict_prix[nouveau_fruit] = prix_nouveau_fruit
+# ici j'insere une cle nouveau_fruit dans le dictionnaire, avec une valeur prix_nouveau_fruit
+# si une cle nouveau_fruit existe deja, sa valeur va etre mise a jour pour prix_nouveau_fruit
+
+# prix_nouveau_fruit = dict_prix[nouveau_fruit]
+#ici je cherche la cle nouveau_fruit dans le dictionnaire, si elle existe je lis sa valeur
+# associee (son prix) et je la mets dans la variable prix_nouveau_fruit
+
+print(dict_prix)
+
+
+#pour afficher chaque paire cle-valeur de maniere plus visuelle:
+for cle,valeur in dict_prix.items():
+    print(f"{cle}: {valeur} $")

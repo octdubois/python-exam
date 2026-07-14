@@ -1,0 +1,93 @@
+# ex6:
+
+# écrire un programme qui permet à l'usager de maintenir le nom de ses contacts et
+# leur numéro de téléphone. il n'y a aucun contact au départ. le programme roule en
+# continue et offre à l'usager les fonctionnalités suivantes:
+
+# 1- voir tous les contacts et leur numéro de téléphone (afficher chaque contact et son numéro sur 1 ligne).
+# 2- voir le numéro de téléphone d'un contact.
+# 3- ajouter un contact et son numéro de téléphone.
+# 4- supprimer un contact.
+
+# Il faut faire les validation appropriées partout dans le programme afin d'assurer un bon fonctionnement
+# sans erreur, en affichant les message appropriés a l'usager.
+
+def afficher_options():
+    """
+    fonction qui affiche les options a l'usager
+    """
+    print("\n")
+    print("1- voir tous les contacts et leur numéro de téléphone")
+    print("2- voir le numéro de téléphone d'un contact")
+    print("3- ajouter un contact et son numéro de téléphone")
+    print("4- supprimer un contact.")
+    print("\n")
+
+
+def ajouter_contact(nom_a_ajouter:str, numero_tel_a_ajouter:str, dict_de_contacts: dict):
+    """
+    fonction qui prend comme argument un nom de contact a ajouter, et son numero de telephone,
+    et insere ce contact dans le dictionnaire de contacts 
+    """
+    if nom_a_ajouter in dict_de_contacts:
+        print(f"le contact {nom_a_ajouter} existe deja!")
+    elif numero_tel_a_ajouter == "":
+        print("erreur: numero de telephone vide!")
+        # on aurait pu faire des vraies validations sur le numero de telephone,
+        # mais trop complexe pour ce cours
+    else:
+        dict_de_contacts[nom_a_ajouter] = numero_tel_a_ajouter
+        print(f"le contact {nom_a_ajouter} avec numero {numero_tel_a_ajouter} insere avec succes!")
+
+
+def voir_tous_les_contacts(dict_de_contacts: dict):
+    for nom,numero in dict_de_contacts.items():
+        print(f"{nom} --- {numero}")
+
+def voir_numero_contact(nom: str,dict_de_contacts: dict):
+    """
+    fonction qui prend un nom de contact et le dictionnaire de contacts,
+    et affiche le numero associe avec le nom si ce nom existe,
+    sinon il affiche un message d'erreur
+    """
+    if nom in dict_de_contacts:
+        numero_du_contact = dict_de_contacts[nom]
+        print(f"{nom} --- {numero_du_contact}")
+    else:
+        print(f"le contact {nom} n'existe pas!")
+
+
+def supprimer_contact(nom_a_supprimer: str,dict_de_contacts: dict):
+    """
+    fonction qui prend un nom de contact et le dictionnaire de contacts,
+    et supprime ce nom du dictionnaire s'il est dedans 
+    """
+    if nom_a_supprimer in dict_de_contacts:
+        del dict_de_contacts[nom_a_supprimer]
+        print(f"contact {nom_a_supprimer} supprime!")
+    else:
+        print(f"le contact {nom_a_supprimer} n'existe pas!")
+
+
+dict_contacts : dict[str,str] = {}
+# ma cle va etre le nom de contact, la valeur associee sera le numero de telephone
+
+while True:
+    afficher_options()
+    choix = input("entrez votre choix: ")
+    if choix == "1":
+        voir_tous_les_contacts(dict_de_contacts=dict_contacts)
+    elif choix == "2":
+        nom_choisi = input("entrez le nom d'un contact pour voir son numero: ")
+        voir_numero_contact(nom=nom_choisi,dict_de_contacts=dict_contacts)
+    elif choix == "3":
+        nouveau_nom = input("entrez un nom de contact a ajouter: ")
+        nouveau_numero_tel = input("entrez le numero de telephone du nouvaeu contact: ")
+        ajouter_contact(nom_a_ajouter=nouveau_nom,numero_tel_a_ajouter=nouveau_numero_tel,dict_de_contacts=dict_contacts)
+    elif choix == "4":
+        nom_entre = input("entrez un nom de contact a supprimer: ")
+        supprimer_contact(nom_a_supprimer=nom_entre,dict_de_contacts=dict_contacts)
+    elif choix == "": # arreter quand usager entre un string vide
+        break
+    else:
+        print("choix non-valide!")

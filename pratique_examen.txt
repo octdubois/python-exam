@@ -1,0 +1,46 @@
+# 4- Créer une classe Auto et une classe Moto et une classe Avion et créer quelques attributs
+# pertinents pour chaque classe.
+# Il faut aussi creer la methode speciale __str__ 
+# Créer plusieurs objets de type auto et moto et avion dans un programme simple de votre choix,
+# soyez créatifs (si vous le voulez). Par exemple, on peut avoir un programme qui
+# permet a l'usager de creer des objets de chaque type en boucle, puis affiche tous les objets
+# créés avant de terminer.
+
+class Auto:
+    def __init__(self, marque, annee):
+        self.marque = marque
+        self.annee = annee
+
+    def __str__(self):
+        return f"Auto {self.marque} - {self.annee}"
+
+class Moto:
+    def __init__(self,marque,couleur):
+        self.marque = marque
+        self.couleur = couleur
+
+    def __str__(self):
+        return f"Moto {self.marque} - {self.couleur}"
+
+class Avion:
+    def __init__(self, capacite_max, annee):
+        self.capacite_max = capacite_max
+        self.annee = annee
+    
+    def __str__(self):
+        return f"Avion {self.capacite_max} - {self.annee}"
+    
+
+auto1 = Auto(marque="mazda",annee="2010")
+auto2 = Auto(marque="bmw",annee="1999")
+
+moto1 = Moto(marque="honda",couleur="jaune")
+moto2 = Moto(marque="honda",couleur="bleu")
+
+avion1 = Avion(capacite_max=200,annee="2010")
+avion2 = Avion(capacite_max=50,annee="2000")
+
+liste_vehicules = [auto1, auto2, moto1, moto2, avion1, avion2]
+
+for truc in liste_vehicules:
+    print(truc)
