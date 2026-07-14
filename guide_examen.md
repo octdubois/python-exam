@@ -1,6 +1,6 @@
 # Guide Extensif et Ultime pour l'Examen Pratique (Objectif : < 30 min)
 
-Ce guide fournit des modèles détaillés (templates) classés par structures de données et par concepts. Il contient les **explications, les bonnes pratiques** et des **systèmes complets** prêts à être adaptés à votre examen.
+Ce guide fournit des modèles détaillés (templates) classés par structures de données et par concepts. Il contient les **explications, les bonnes pratiques** et des **systèmes complets** (incluant des notions avancées vues en classe) prêts à être adaptés à votre examen.
 
 ---
 
@@ -133,7 +133,29 @@ def supprimer_contact(contacts, nom):
         print("Erreur : Contact introuvable.")
 ```
 
-### Système 2.2 : Inventaire et Comptage (Fréquence)
+### Système 2.2 : Dictionnaires Imbriqués (Avancé)
+**Idéal pour :** Stocker plusieurs informations pour une même clé (ex: Gestion d'une Bibliothèque).
+
+```python
+# Clé = Titre du livre, Valeur = Dictionnaire d'informations
+bibliotheque = {
+    "Harry Potter": {"auteur": "J.K. Rowling", "annee": 1997},
+    "Le Petit Prince": {"auteur": "Antoine de Saint-Exupéry", "annee": 1943}
+}
+
+def ajouter_livre(biblio, titre, auteur, annee):
+    if titre in biblio:
+        print("Ce livre existe déjà.")
+    else:
+        biblio[titre] = {"auteur": auteur, "annee": annee}
+        print(f"Livre '{titre}' ajouté.")
+
+def afficher_livres(biblio):
+    for titre, infos in biblio.items():
+        print(f"Titre: {titre} | Auteur: {infos['auteur']} | Année: {infos['annee']}")
+```
+
+### Système 2.3 : Inventaire et Comptage (Fréquence)
 **Idéal pour :** Gérer des quantités (ajouter/retirer du stock) ou compter des occurrences.
 
 ```python
@@ -156,35 +178,42 @@ def retirer_stock(inventaire, produit, quantite):
         print(f"Retrait réussi. Stock restant : {inventaire[produit]}")
 ```
 
-### Algorithme : Compter l'occurrence des mots dans une phrase
-```python
-phrase = "chat chien chat oiseau chien chat"
-liste_mots = phrase.split()
-dict_compte_mots = {}
-
-for mot in liste_mots:
-    if mot in dict_compte_mots:
-        dict_compte_mots[mot] += 1
-    else:
-        dict_compte_mots[mot] = 1
-
-for cle, valeur in dict_compte_mots.items():
-    print(f"Le mot '{cle}' est présent {valeur} fois.")
-```
-
 ---
 
-## 3. ⚙️ Les Fonctions (`def`)
+## 3. ⚙️ Les Fonctions et Manipulation de Chaînes (`def` & `Strings`)
 
 **Pourquoi l'utiliser :** Pour nettoyer le code du `while True` (souvent exigé pour des points partiels).
 **Bonnes pratiques :**
+- Ne **JAMAIS** utiliser une variable globale à l'intérieur d'une fonction sans la passer en paramètre.
 - **Passage par référence :** Quand vous passez une Liste ou un Dictionnaire à une fonction et que vous le modifiez dedans, l'objet original est modifié. Pas besoin de faire de `return`.
-- **Utiliser `return` pour les validations :** Séparez la logique de validation de l'affichage.
 
-### Algorithme : Valider une entrée utilisateur complexe (Ex: IP)
+### Manipulation de Chaînes (Strings)
+Souvent utile pour nettoyer les entrées de l'utilisateur ou manipuler des textes.
+
 ```python
+# 1. Diviser une phrase en liste de mots
+phrase = "chat chien oiseau"
+liste_mots = phrase.split() # Devient: ["chat", "chien", "oiseau"]
+
+# 2. Convertir en minuscules (Très utile pour éviter les erreurs de casse)
+entree = input("Entrez un nom : ").lower().strip() # " ALiCe " devient "alice"
+```
+
+### Algorithme : Valider une entrée utilisateur complexe (Gestion d'Exceptions)
+**Idéal pour :** S'assurer que le programme ne plante pas si l'usager entre des lettres au lieu de chiffres.
+
+```python
+def demander_nombre_entier():
+    """Demande un nombre jusqu'à ce que l'usager entre un entier valide."""
+    while True:
+        try:
+            valeur = int(input("Entrez un nombre entier : "))
+            return valeur # Si ça fonctionne, on sort de la boucle et on retourne la valeur
+        except ValueError:
+            print("Erreur : Ce n'est pas un nombre valide. Essayez encore.")
+
+# Exemple de validation d'IP
 def valider_ip(n1, n2, n3, n4):
-    """Retourne l'adresse formatée si valide, sinon None."""
     try:
         n1, n2, n3, n4 = int(n1), int(n2), int(n3), int(n4)
         if (0 <= n1 <= 255) and (0 <= n2 <= 255) and (0 <= n3 <= 255) and (0 <= n4 <= 255):
@@ -192,23 +221,46 @@ def valider_ip(n1, n2, n3, n4):
         else:
             return None
     except ValueError:
-        return None # Cas où l'usager a entré des lettres
-
-# Utilisation:
-# ip = valider_ip(192, 168, 0, 1)
-# if ip is not None:
-#    liste_ip.append(ip)
+        return None
 ```
 
 ---
 
 ## 4. 🧬 Programmation Orientée Objet (Classes)
 
-**Quand l'utiliser :** Quand le problème décrit des "choses" qui ont plusieurs caractéristiques spécifiques (ex: Une Auto a une marque et une année, un Étudiant a un code et des notes).
+**Quand l'utiliser :** Quand le problème décrit des "choses" qui ont plusieurs caractéristiques spécifiques et des actions (ex: Un Chien qui peut "courir" ou dont on peut calculer le prix).
 **Bonnes pratiques :**
 - Le professeur demande presque toujours la méthode magique `__str__` pour gérer l'affichage avec un `print(objet)`.
 
-### Système 4.1 : Système Scolaire / Gestion (Objet contenant une liste)
+### Système 4.1 : Classe avec calculs internes
+**Idéal pour :** Des objets qui prennent des décisions basées sur leurs attributs.
+
+```python
+class Chien:
+    def __init__(self, nom, race, age):
+        self.nom = nom
+        self.race = race
+        self.age = age
+
+    def anniversaire(self):
+        """Modifie un attribut interne."""
+        self.age += 1
+        print(f"Joyeux anniversaire {self.nom}! Il a maintenant {self.age} ans.")
+
+    def calculer_prix(self):
+        """Retourne une valeur calculée selon l'état de l'objet."""
+        if self.age < 1:
+            return 3000
+        elif self.race == "Chiwawa":
+            return 6000
+        else:
+            return 1000
+
+    def __str__(self):
+        return f"Chien: {self.nom} (Race: {self.race}, Âge: {self.age})"
+```
+
+### Système 4.2 : Système Scolaire / Gestion (Objet contenant une liste)
 **Idéal pour :** Les entités qui possèdent une liste interne de données (comme des notes, des employés, etc.).
 
 ```python
@@ -232,39 +284,70 @@ class Etudiant:
 
     def __str__(self):
         return f"Étudiant: {self.nom} ({self.matricule}) - Moyenne: {self.calculer_moyenne():.2f}"
-
-# Utilisation
-etudiant1 = Etudiant("Alice", "12345")
-etudiant1.ajouter_note(85)
-etudiant1.ajouter_note(90)
-print(etudiant1)
 ```
 
-### Système 4.2 : Système Bancaire (Objet avec interactions mathématiques)
-**Idéal pour :** Les objets dont l'état change via des opérations (dépôt, retrait).
+### Système 4.3 : Bibliothèque (Composition d'Objets)
+**Idéal pour :** L'exercice classique où une classe (Bibliothèque) possède un Dictionnaire d'autres Objets (Livre).
 
 ```python
-class CompteBancaire:
-    def __init__(self, titulaire, solde_initial=0):
-        self.titulaire = titulaire
-        self.solde = solde_initial
-
-    def deposer(self, montant):
-        if montant > 0:
-            self.solde += montant
-            print(f"Dépôt réussi. Nouveau solde : {self.solde}")
-        else:
-            print("Erreur : Le montant doit être positif.")
-
-    def retirer(self, montant):
-        if montant <= 0:
-            print("Erreur : Le montant doit être positif.")
-        elif montant > self.solde:
-            print("Erreur : Fonds insuffisants.")
-        else:
-            self.solde -= montant
-            print(f"Retrait réussi. Nouveau solde : {self.solde}")
+class Livre:
+    def __init__(self, titre, auteur, annee):
+        self.titre = titre
+        self.auteur = auteur
+        self.annee = annee
 
     def __str__(self):
-        return f"Compte de {self.titulaire} : {self.solde} $"
+        return f"'{self.titre}' par {self.auteur} ({self.annee})"
+
+class Bibliotheque:
+    def __init__(self, nom):
+        self.nom = nom
+        self.dict_livres = {} # Clé: Titre, Valeur: Objet Livre
+
+    def ajouter_livre(self, livre_obj):
+        if livre_obj.titre in self.dict_livres:
+            print("Le livre existe déjà dans la bibliothèque.")
+        else:
+            self.dict_livres[livre_obj.titre] = livre_obj
+            print(f"Livre ajouté à la bibliothèque {self.nom}.")
+
+    def afficher_tout(self):
+        print(f"--- Bibliothèque: {self.nom} ---")
+        for titre, livre_obj in self.dict_livres.items():
+            print(livre_obj)
+
+# Utilisation
+biblio = Bibliotheque("Ma Super Bibliothèque")
+livre1 = Livre("Python pour les Nuls", "John Doe", 2020)
+biblio.ajouter_livre(livre1)
+```
+
+---
+
+## 📁 5. Manipulation de Fichiers (File I/O)
+
+**Quand l'utiliser :** Si l'examen demande de sauvegarder des données ou de les charger depuis un fichier texte (vu dans `cours.py`).
+
+```python
+# 1. Lire tout le contenu d'un fichier
+def lire_fichier(nom_fichier):
+    try:
+        fichier = open(nom_fichier, "r", encoding="utf-8")
+        contenu = fichier.read()
+        fichier.close()
+        return contenu
+    except FileNotFoundError:
+        return "Le fichier n'existe pas."
+
+# 2. Écrire dans un fichier (écrase le contenu précédent)
+def ecrire_fichier(nom_fichier, texte):
+    fichier = open(nom_fichier, "w", encoding="utf-8")
+    fichier.write(texte)
+    fichier.close()
+
+# 3. Ajouter à un fichier existant (sans effacer le reste)
+def ajouter_au_fichier(nom_fichier, texte):
+    fichier = open(nom_fichier, "a", encoding="utf-8")
+    fichier.write(texte + "\n")
+    fichier.close()
 ```
